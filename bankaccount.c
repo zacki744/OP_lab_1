@@ -27,7 +27,7 @@ unsigned odd(unsigned long num) {
 // simulate id performing 1000 transactions
 void do1000Transactions(unsigned long id) {
     for (int i = 0; i < 1000; i++) {
-        if (odd(id))
+        if (odd(id) == 0)
             deposit(100.00); // odd threads deposit
         else
             withdraw(100.00); // even threads withdraw
@@ -42,7 +42,7 @@ void* child(void* buf) {
 
 int main(int argc, char** argv) {
     pthread_t *children;
-    unsigned long id = 0;
+    unsigned long id = 1;
     unsigned long nThreads = 0;
     if (argc > 1)
         nThreads = atoi(argv[1]);

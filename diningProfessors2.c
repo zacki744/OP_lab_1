@@ -6,20 +6,20 @@
 // Shared Variables
 pthread_mutex_t choppsticks[PROFESSOR_COUNT];
 const char *professors[] = {"Tanenbaum", "Dijkstra", "Knuth", "Lamport", "Turing"};
-int professor_eating_count[] = {0, 0, 0, 0, 0};
+//int professor_eating_count[] = {0, 0, 0, 0, 0};
 void thinking(int id) {
-    //printf("%s: is thinking\n", professors[id]);
-    //sleep((rand() % 4) + 1);
+    printf("%s: is thinking\n", professors[id]);
+    sleep((rand() % 4) + 1);
 }
 void thinkingTwo(int id) {
-    //printf("%s: got left chopstick\n", professors[id]);
-    //sleep((rand() % 6) + 2);
+    printf("%s: got left chopstick\n", professors[id]);
+    sleep((rand() % 6) + 2);
 }
 void eating(int id) {
     professor_eating_count[id]++;
-    //printf("%s: is eating\n", professors[id]);
-    printf("%s: %d\n", professors[id], professor_eating_count[id]);
-    //sleep((rand() % 5) + 5);
+    printf("%s: is eating\n", professors[id]);
+    //printf("%s: %d\n", professors[id], professor_eating_count[id]);
+    sleep((rand() % 5) + 5);
 }
 
 void* DinnerTable(void* arg) {
@@ -36,12 +36,12 @@ void* DinnerTable(void* arg) {
         int check = pthread_mutex_trylock(&choppsticks[right]); //try
 
         if (check != 0) { // if the check on the right is free than eat
-            //printf("%s: got right chopstick.\n", professors[left]);
+            printf("%s: got right chopstick.\n", professors[left]);
             eating(id);
             pthread_mutex_unlock(&choppsticks[right]);
         }
         else { // else putt down the left chopstick
-            //printf("%s: cannot eat rigth now, putting down left chopstick.\n", professors[left]);
+            printf("%s: cannot eat rigth now, putting down left chopstick.\n", professors[left]);
             pthread_mutex_unlock(&choppsticks[left]);
         }
     }

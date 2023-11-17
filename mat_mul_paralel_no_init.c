@@ -19,19 +19,18 @@ static double b[SIZE][SIZE];
 static double c[SIZE][SIZE];
 
 static void *
-init_matrix(void* args)
+init_matrix(void)
 {
-    struct RowRes *res = (struct RowRes *)args;
-    for (int i = res->start_row; i < res->end_row; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            /* Simple initialization, which enables us to easy check
-                * the correct answer. Each element in c will have the same
-                * value as SIZE after the matmul operation.
-                */
-            a[i][j] = 1.0;
-            b[i][j] = 1.0;
-        }
-    }
+int i, j;
+for (i = 0; i < SIZE; i++)
+for (j = 0; j < SIZE; j++) {
+/* Simple initialization, which enables us to easy check
+* the correct answer. Each element in c will have the same
+* value as SIZE after the matmul operation.
+*/
+a[i][j] = 1.0;
+b[i][j] = 1.0;
+}
 }
 
 static void *
@@ -69,20 +68,11 @@ main(int argc, char **argv)
 
     int num_threads = atoi(argv[1]);
     int rows_per_thread = SIZE / num_threads;
-    //printf("rows_per_thread: %d\n", rows_per_thread);
 
     pthread_t init_threads[num_threads];
     struct RowRes init_thread_data[num_threads];
 
-    for (int i = 0; i < num_threads; i++) {
-        init_thread_data[i].start_row = i * rows_per_thread;
-        init_thread_data[i].end_row = (i + 1) * rows_per_thread;
-        pthread_create(&init_threads[i], NULL, init_matrix, &init_thread_data[i]);
-    }
-
-    for (int i = 0; i < num_threads; i++) {
-        pthread_join(init_threads[i], NULL);
-    }
+    init_matrix();
 
     pthread_t mul_threads[num_threads];
     struct RowRes mul_thread_data[num_threads];
