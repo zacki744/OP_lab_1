@@ -1,0 +1,10 @@
+#!/bin/bash
+# Run script 1 multiple times
+for i in {1..5}; do
+    time ./run1
+done
+
+# Run script 2 multiple times
+for i in {1..5}; do
+    time ./run2
+done

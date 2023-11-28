@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-/* test1.c */
-
 #define SIZE (32*1024)
 #define ITERATIONS 10
+/* test1.c */
+
 
 int main(int argc, char **argv)
 {
