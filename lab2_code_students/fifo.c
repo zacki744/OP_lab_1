@@ -23,15 +23,15 @@ int main(int argc, char *argv[]) {
         memory_trace[i] /= page_size;
     }
 
+    //fifo algorithem
     for (i = 0; i < MAX; i++) {
-        flag = 0;
+        int j;
         for (j = 0; j < no_phys_pages; j++) {
             if (pages[j] == memory_trace[i]) {
-                flag = 1;
                 break;
             }
         }
-        if (flag == 0) {
+        if (j == no_phys_pages) {
             pages[count % no_phys_pages] = memory_trace[i];
             count++;
             faults++;
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     }
 
     printf("No physical pages = %d, page size = %d\n", no_phys_pages, page_size);
-    printf("Reading memory trace from %s... Read %d memory references\n", filename, MAX);
+    printf("Reading memory trace from %s...\nRead %d memory references\n", filename, MAX);
     printf("Result: %d page faults\n", faults);
 
     free(pages);
